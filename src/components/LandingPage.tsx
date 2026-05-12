@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, Code, Play, ChevronRight, BookOpen, GitBranch, Cpu, BarChart3, Globe } from 'lucide-react';
+import { Zap, Code, Play, ChevronRight, BookOpen, Cpu, BarChart3, Globe } from 'lucide-react';
 
 interface Props { onStart: () => void; }
 

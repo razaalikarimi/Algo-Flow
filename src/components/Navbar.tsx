@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Zap, Menu, X, BookOpen, FileText, MessageSquare, LogIn } from 'lucide-react';
+import React from 'react';
+import { LogIn } from 'lucide-react';
 
 interface Props {
   page: 'home' | 'editor';
@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Navbar: React.FC<Props> = ({ page, onNavigate }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <nav className="navbar">

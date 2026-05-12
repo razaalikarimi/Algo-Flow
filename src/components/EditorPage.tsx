@@ -3,6 +3,7 @@ import { Play, Pause, SkipBack, RefreshCw, BookOpen, ChevronRight, Search, Layer
 import MonacoEditor from './MonacoEditor';
 import BarsVis from './BarsVis';
 import ArrayVis from './ArrayVis';
+import GraphVis from './GraphVis';
 import ExamplesModal from './ExamplesModal';
 import { ALGORITHMS } from '../data/algorithms';
 import { generateFrames } from '../engine/visualizer';
@@ -19,6 +20,22 @@ interface AlgoExample {
 }
 
 const CATEGORIES = ['All', 'Sorting', 'Searching', 'Graph', 'Tree', 'Dynamic Programming', 'Stack & Queue', 'Linked List'];
+
+const SAMPLE_GRAPH = {
+  nodes: [
+    { id: '0', x: 300, y: 60, label: 'A' },
+    { id: '1', x: 180, y: 150, label: 'B' },
+    { id: '2', x: 420, y: 150, label: 'C' },
+    { id: '3', x: 100, y: 260, label: 'D' },
+    { id: '4', x: 260, y: 260, label: 'E' },
+    { id: '5', x: 500, y: 260, label: 'F' },
+  ],
+  edges: [
+    { from: '0', to: '1' }, { from: '0', to: '2' },
+    { from: '1', to: '3' }, { from: '1', to: '4' },
+    { from: '2', to: '5' },
+  ]
+};
 
 const EditorPage: React.FC = () => {
   const [selectedAlgo, setSelectedAlgo] = useState<AlgoExample>(ALGORITHMS[0] as AlgoExample);
@@ -189,6 +206,13 @@ const EditorPage: React.FC = () => {
           <div className="vis-canvas">
             {frame && (selectedAlgo.visType === 'bars' || selectedAlgo.id === 'bubble-sort' || selectedAlgo.id === 'merge-sort') ? (
               <BarsVis frames={frames} currentFrame={currentFrame} />
+            ) : frame && selectedAlgo.visType === 'graph' ? (
+              <GraphVis 
+                nodes={SAMPLE_GRAPH.nodes} 
+                edges={SAMPLE_GRAPH.edges} 
+                highlightedNodes={frame.comparing.map(String)} 
+                visitedNodes={frame.sorted.map(String)} 
+              />
             ) : frame ? (
               <ArrayVis array={frame.array} highlight={frame.comparing} visited={frame.sorted} />
             ) : (

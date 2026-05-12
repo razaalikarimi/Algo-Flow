@@ -5,12 +5,12 @@ import { Zap, Code, Play, ChevronRight, BookOpen, Cpu, BarChart3, Globe } from '
 interface Props { onStart: () => void; }
 
 const features = [
-  { icon: <Code size={22} />, title: 'Monaco Editor', desc: 'VS Code-powered editor with syntax highlighting, autocomplete, and real-time error detection.', color: 'rgba(124,58,237,0.2)' },
-  { icon: <Play size={22} />, title: 'Step-by-Step Playback', desc: 'Watch algorithms execute one step at a time. Track variables, comparisons, and swaps live.', color: 'rgba(6,182,212,0.2)' },
-  { icon: <BookOpen size={22} />, title: '10+ Algorithms', desc: 'Curated library of sorting, searching, graph traversal, and dynamic programming algorithms.', color: 'rgba(16,185,129,0.2)' },
-  { icon: <Globe size={22} />, title: 'Multi-Language', desc: 'Write and visualize in JavaScript or Python. Switch languages with a single click.', color: 'rgba(245,158,11,0.2)' },
-  { icon: <Cpu size={22} />, title: 'Variable Tracker', desc: 'Real-time variable watch panel shows exactly what each variable holds at every step.', color: 'rgba(239,68,68,0.2)' },
-  { icon: <BarChart3 size={22} />, title: 'Complexity Analysis', desc: 'Instant time and space complexity breakdown for every algorithm in the library.', color: 'rgba(168,85,247,0.2)' },
+  { icon: <Code size={24} />, title: 'Advanced Editor', desc: 'Enterprise-grade Monaco editor with full intellisense and smart highlighting.', color: 'var(--primary-glow)', textColor: 'var(--primary)' },
+  { icon: <Play size={24} />, title: 'Deep Tracing', desc: 'Trace every variable mutation and comparison with frame-perfect precision.', color: 'var(--secondary-glow)', textColor: 'var(--secondary)' },
+  { icon: <BookOpen size={24} />, title: 'Curated Library', desc: 'From basic sorting to complex graph algorithms and dynamic programming.', color: 'var(--tertiary-glow)', textColor: 'var(--tertiary)' },
+  { icon: <Globe size={24} />, title: 'Polyglot Support', desc: 'Toggle between high-level Python and robust JavaScript in a single click.', color: 'rgba(245,158,11,0.1)', textColor: 'var(--yellow)' },
+  { icon: <Cpu size={24} />, title: 'Engine Insights', desc: 'See how the memory stack and heap change as your code executes.', color: 'rgba(244,63,94,0.1)', textColor: 'var(--accent)' },
+  { icon: <BarChart3 size={24} />, title: 'Visual Metrics', desc: 'Analyze time complexity and operation counts with live data charts.', color: 'rgba(139,92,246,0.1)', textColor: '#8b5cf6' },
 ];
 
 const LandingPage: React.FC<Props> = ({ onStart }) => {
@@ -63,7 +63,7 @@ const LandingPage: React.FC<Props> = ({ onStart }) => {
         <div className="features-grid">
           {features.map((f, i) => (
             <motion.div key={i} className="feature-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} viewport={{ once: true }}>
-              <div className="feature-icon" style={{ background: f.color, color: 'var(--text)' }}>{f.icon}</div>
+              <div className="feature-icon" style={{ background: f.color, color: f.textColor }}>{f.icon}</div>
               <div className="feature-title">{f.title}</div>
               <div className="feature-desc">{f.desc}</div>
             </motion.div>

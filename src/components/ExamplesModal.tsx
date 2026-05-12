@@ -27,12 +27,13 @@ const ExamplesModal: React.FC<Props> = ({ onSelect, onClose }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={e => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>
+          <X size={20} />
+        </button>
+
         <div className="modal-header">
-          <div>
-            <div className="modal-title">Example Algorithms</div>
-            <div className="modal-sub">{ALGORITHMS.length}+ code examples ready to visualize</div>
-          </div>
-          <button className="btn-ghost" onClick={onClose}><X size={18} /></button>
+          <div className="modal-title">Algorithm Library</div>
+          <div className="modal-sub" style={{ marginTop: 4 }}>Explore {ALGORITHMS.length}+ production-ready examples</div>
         </div>
 
         <div className="modal-search">
@@ -42,7 +43,7 @@ const ExamplesModal: React.FC<Props> = ({ onSelect, onClose }) => {
               placeholder="Search algorithms..."
               value={query}
               onChange={e => setQuery(e.target.value)}
-              style={{ paddingLeft: 36, width:'100%' }}
+              style={{ paddingLeft: 40, width:'100%', height: 44, borderRadius: 12 }}
               autoFocus
             />
           </div>
@@ -50,7 +51,7 @@ const ExamplesModal: React.FC<Props> = ({ onSelect, onClose }) => {
             value={lang}
             onChange={e => setLang(e.target.value as Lang)}
             className="lang-select"
-            style={{ minWidth: 120 }}
+            style={{ minWidth: 140, height: 44 }}
           >
             <option value="javascript">JavaScript</option>
             <option value="python">Python</option>

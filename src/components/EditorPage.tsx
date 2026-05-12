@@ -125,29 +125,32 @@ const EditorPage: React.FC = () => {
       {/* ── SIDEBAR ── */}
       <aside className="sidebar">
         <div className="sidebar-header">
-          <span className="sidebar-title">Algorithms</span>
-          <button className="btn-ghost" style={{ padding: '4px 8px', fontSize: '0.75rem' }} onClick={() => setShowExamples(true)}>
-            <BookOpen size={13} /> Browse
+          <span className="sidebar-title">Algorithm Lab</span>
+          <button className="btn-ghost" style={{ padding: '6px 10px', borderRadius: 8 }} onClick={() => setShowExamples(true)}>
+            <BookOpen size={14} />
           </button>
         </div>
+        
         <div className="sidebar-search">
-          <Search size={14} className="sidebar-search-icon" />
-          <input placeholder="Search..." value={sidebarQuery} onChange={e => setSidebarQuery(e.target.value)} />
+          <Search size={16} className="sidebar-search-icon" />
+          <input placeholder="Search library..." value={sidebarQuery} onChange={e => setSidebarQuery(e.target.value)} />
         </div>
-        <div style={{ display: 'flex', gap: 4, padding: '0 0.75rem 0.5rem', flexWrap: 'wrap' }}>
+
+        <div style={{ padding: '0 1.25rem 1rem', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           {CATEGORIES.slice(0, 5).map(cat => (
             <button key={cat} onClick={() => setSidebarCategory(cat)}
-              style={{
-                fontSize: '0.7rem', padding: '3px 8px', borderRadius: 6, cursor: 'pointer',
-                background: sidebarCategory === cat ? 'rgba(124,58,237,0.2)' : 'var(--bg-3)',
-                color: sidebarCategory === cat ? 'var(--primary-light)' : 'var(--text-3)',
-                border: `1px solid ${sidebarCategory === cat ? 'var(--primary)' : 'transparent'}`,
-                transition: 'all 0.2s',
+              className={`nav-badge ${sidebarCategory === cat ? 'active' : ''}`}
+              style={{ 
+                cursor: 'pointer', 
+                background: sidebarCategory === cat ? 'var(--primary)' : 'var(--bg-3)',
+                color: sidebarCategory === cat ? 'white' : 'var(--text-2)',
+                border: '1px solid transparent'
               }}>
               {cat}
             </button>
           ))}
         </div>
+
         <div className="sidebar-list">
           {filteredAlgos.map(algo => (
             <div
@@ -155,8 +158,11 @@ const EditorPage: React.FC = () => {
               className={`sidebar-item ${selectedAlgo.id === algo.id ? 'active' : ''}`}
               onClick={() => loadAlgo(algo)}
             >
-              <span>{algo.icon} {algo.name}</span>
-              <span className={`sidebar-item-badge badge-${algo.difficulty.toLowerCase().replace('medium','med')}`}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: '1.1rem' }}>{algo.icon}</span>
+                <span>{algo.name}</span>
+              </div>
+              <span className={`sidebar-item-badge badge-${algo.difficulty.toLowerCase().replace('medium','med')}`} style={{ fontSize: '0.65rem' }}>
                 {algo.difficulty}
               </span>
             </div>
@@ -166,24 +172,40 @@ const EditorPage: React.FC = () => {
 
       {/* ── CENTER PANEL ── */}
       <div className="center-panel">
-        {/* Toolbar */}
         <div className="editor-toolbar">
-          <select className="lang-select" value={lang} onChange={e => handleLangChange(e.target.value as Lang)}>
-            <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
-          </select>
-          <div className="toolbar-sep" />
-          <button className="btn-ghost" onClick={() => setShowExamples(true)} style={{ fontSize: '0.82rem', padding: '5px 12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div className="nav-logo-icon" style={{ width: 32, height: 32, fontSize: '0.8rem' }}>{selectedAlgo.icon}</div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text)' }}>{selectedAlgo.name}</span>
+              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-3)', textTransform: 'uppercase' }}>{selectedAlgo.category}</span>
+            </div>
+          </div>
+
+          <div style={{ flex: 1 }} />
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--bg-3)', padding: '4px', borderRadius: 10 }}>
+            {(['javascript', 'python'] as const).map(l => (
+              <button 
+                key={l}
+                onClick={() => handleLangChange(l)}
+                style={{
+                  fontSize: '0.75rem', fontWeight: 700, padding: '4px 10px', borderRadius: 8,
+                  background: lang === l ? 'white' : 'transparent',
+                  color: lang === l ? 'var(--primary)' : 'var(--text-3)',
+                  boxShadow: lang === l ? 'var(--shadow-sm)' : 'none'
+                }}
+              >
+                {l === 'javascript' ? 'JS' : 'PY'}
+              </button>
+            ))}
+          </div>
+
+          <button className="btn-primary" onClick={() => setShowExamples(true)} style={{ padding: '6px 14px', fontSize: '0.82rem', borderRadius: 10 }}>
             <BookOpen size={14} /> Examples
           </button>
-          <div style={{ flex: 1 }} />
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-3)', background: 'var(--bg-3)', padding: '4px 10px', borderRadius: 6 }}>
-            {selectedAlgo.icon} {selectedAlgo.name}
-          </span>
         </div>
 
-        {/* Monaco Editor */}
-        <div className="code-area" style={{ height: '45%' }}>
+        <div className="code-area">
           <MonacoEditor
             code={code}
             language={lang === 'javascript' ? 'javascript' : 'python'}
@@ -192,13 +214,22 @@ const EditorPage: React.FC = () => {
           />
         </div>
 
-        {/* Divider */}
         <div className="divider-bar">
-          <span className="divider-label">
-            <Layers size={12} style={{ display:'inline', marginRight:5, verticalAlign:'middle' }} />
-            Visualization
-          </span>
-          {frame && <span style={{ fontSize: '0.75rem', color: 'var(--primary-light)', fontWeight: 600 }}>{frame.label}</span>}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Layers size={14} style={{ color: 'var(--primary)' }} />
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-2)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Live Trace Visualization
+            </span>
+          </div>
+          {frame && (
+            <span style={{ 
+              fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary)', background: 'white', 
+              padding: '4px 12px', borderRadius: 20, boxShadow: 'var(--shadow-sm)',
+              maxWidth: '50%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
+            }}>
+              {frame.label}
+            </span>
+          )}
         </div>
 
         {/* Visualization */}
@@ -261,29 +292,25 @@ const EditorPage: React.FC = () => {
         <div className="right-tabs">
           {(['steps', 'vars', 'info'] as const).map(t => (
             <button key={t} className={`right-tab ${rightTab === t ? 'active' : ''}`} onClick={() => setRightTab(t)}>
-              {t === 'steps' ? 'Steps' : t === 'vars' ? 'Variables' : 'Info'}
+              {t === 'steps' ? 'Logic' : t === 'vars' ? 'Trace' : 'Docs'}
             </button>
           ))}
         </div>
         <div className="right-content">
           {rightTab === 'steps' && (
             <div>
+              <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-3)', textTransform: 'uppercase', marginBottom: '1rem' }}>Algorithm Steps</div>
               {(selectedAlgo.steps || []).map((step, i) => (
                 <div key={i} className={`step-item ${frame && frame.activeLine === i + 1 ? 'active' : ''}`}>
-                  <span className="step-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="step-text">{step}</span>
+                  <span className="step-num">{i + 1}</span>
+                  <span className="step-text" style={{ fontSize: '0.8rem', fontWeight: 500 }}>{step}</span>
                 </div>
               ))}
-              {frame && (
-                <div style={{ marginTop: '1rem', padding: '0.75rem', background: 'rgba(124,58,237,0.1)', border: '1px solid rgba(124,58,237,0.3)', borderRadius: 10, fontSize: '0.82rem', color: 'var(--text-2)' }}>
-                  <div style={{ color: 'var(--primary-light)', fontWeight: 600, marginBottom: 4 }}>Current Step</div>
-                  {frame.label}
-                </div>
-              )}
             </div>
           )}
           {rightTab === 'vars' && (
             <div>
+              <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-3)', textTransform: 'uppercase', marginBottom: '1rem' }}>Active Variables</div>
               {frame && Object.entries(frame.variables).map(([k, v]) => (
                 <div key={k} className="var-row">
                   <span className="var-name">{k}</span>
@@ -291,27 +318,32 @@ const EditorPage: React.FC = () => {
                 </div>
               ))}
               {(!frame || Object.keys(frame.variables || {}).length === 0) && (
-                <div style={{ color: 'var(--text-3)', fontSize: '0.85rem', padding: '0.5rem' }}>No variables tracked yet</div>
+                <div style={{ color: 'var(--text-3)', fontSize: '0.85rem', padding: '1rem', textAlign: 'center', border: '1px dashed var(--border)', borderRadius: 12 }}>
+                  No active tracers
+                </div>
               )}
             </div>
           )}
           {rightTab === 'info' && (
             <div>
-              <div style={{ display: 'flex', gap: 8, marginBottom: '1rem', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '1.5rem' }}>{selectedAlgo.icon}</span>
+              <div style={{ display: 'flex', gap: 12, marginBottom: '1.5rem' }}>
+                <div style={{ fontSize: '2rem', background: 'var(--bg-3)', width: 56, height: 56, borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{selectedAlgo.icon}</div>
                 <div>
-                  <div style={{ fontWeight: 700 }}>{selectedAlgo.name}</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-2)' }}>{selectedAlgo.category}</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.1rem' }}>{selectedAlgo.name}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', fontWeight: 700 }}>{selectedAlgo.category}</div>
                 </div>
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-2)', lineHeight: 1.6, marginBottom: '1.25rem' }}>{selectedAlgo.description}</p>
-              <div className="complexity-card">
-                <div className="complexity-label">Time Complexity</div>
-                <div className="complexity-val gradient-text">{selectedAlgo.timeComplexity}</div>
-              </div>
-              <div className="complexity-card">
-                <div className="complexity-label">Space Complexity</div>
-                <div className="complexity-val" style={{ color: 'var(--cyan)' }}>{selectedAlgo.spaceComplexity}</div>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-2)', lineHeight: 1.6, marginBottom: '1.5rem' }}>{selectedAlgo.description}</p>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                <div className="complexity-card">
+                  <div className="complexity-label">Time</div>
+                  <div className="complexity-val" style={{ color: 'var(--primary)' }}>{selectedAlgo.timeComplexity}</div>
+                </div>
+                <div className="complexity-card">
+                  <div className="complexity-label">Space</div>
+                  <div className="complexity-val" style={{ color: 'var(--secondary)' }}>{selectedAlgo.spaceComplexity}</div>
+                </div>
               </div>
             </div>
           )}

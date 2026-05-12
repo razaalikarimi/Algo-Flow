@@ -27,10 +27,10 @@ const Navbar: React.FC<Props> = ({ page, onNavigate }) => {
         </div>
 
         <div className="nav-right">
-          <button className="btn-ghost" style={{ fontSize: '0.82rem', padding: '6px 14px' }}>
-            <LogIn size={14} /> Login
+          <button className="btn-ghost" style={{ fontSize: '0.85rem' }}>
+            <LogIn size={15} /> Login
           </button>
-          <button className="btn-primary" onClick={() => onNavigate('editor')} style={{ fontSize: '0.82rem', padding: '6px 14px' }}>
+          <button className="btn-primary" onClick={() => onNavigate('editor')} style={{ fontSize: '0.85rem' }}>
             Open Editor
           </button>
         </div>

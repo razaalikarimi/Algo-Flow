@@ -42,33 +42,33 @@ const MonacoEditor: React.FC<Props> = ({ code, language, onChange, activeLines =
   function initEditor(monaco: any) {
     if (!containerRef.current || editorRef.current) return;
     
-    monaco.editor.defineTheme('algoflow-dark', {
-      base: 'vs-dark',
+    monaco.editor.defineTheme('algoflow-light', {
+      base: 'vs',
       inherit: true,
       rules: [
-        { token: 'keyword', foreground: 'a855f7', fontStyle: 'bold' },
+        { token: 'keyword', foreground: '6366f1', fontStyle: 'bold' },
         { token: 'string', foreground: '10b981' },
-        { token: 'number', foreground: '06b6d4' },
-        { token: 'comment', foreground: '4b5563', fontStyle: 'italic' },
-        { token: 'function', foreground: 'f8b4ff' },
+        { token: 'number', foreground: '0ea5e9' },
+        { token: 'comment', foreground: '94a3b8', fontStyle: 'italic' },
+        { token: 'function', foreground: '8b5cf6' },
       ],
       colors: {
-        'editor.background': '#080810',
-        'editor.foreground': '#f1f5f9',
-        'editor.lineHighlightBackground': '#161625',
-        'editorLineNumber.foreground': '#4b5563',
-        'editorLineNumber.activeForeground': '#a855f7',
-        'editor.selectionBackground': '#7c3aed33',
-        'editorCursor.foreground': '#a855f7',
-        'editor.inactiveSelectionBackground': '#7c3aed20',
-        'scrollbarSlider.background': '#1e1e30',
+        'editor.background': '#ffffff',
+        'editor.foreground': '#0f172a',
+        'editor.lineHighlightBackground': '#f1f5f9',
+        'editorLineNumber.foreground': '#94a3b8',
+        'editorLineNumber.activeForeground': '#6366f1',
+        'editor.selectionBackground': '#6366f120',
+        'editorCursor.foreground': '#6366f1',
+        'editor.inactiveSelectionBackground': '#6366f110',
+        'scrollbarSlider.background': '#e2e8f0',
       },
     });
 
     editorRef.current = monaco.editor.create(containerRef.current, {
       value: code,
       language,
-      theme: 'algoflow-dark',
+      theme: 'algoflow-light',
       fontSize: 14,
       fontFamily: "'JetBrains Mono', monospace",
       fontLigatures: true,

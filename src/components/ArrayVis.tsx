@@ -16,18 +16,13 @@ const ArrayVis: React.FC<Props> = ({ array, highlight = [], visited = [] }) => {
         return (
           <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
             <div
+              className={`array-cell ${isHighlight ? 'highlight' : ''} ${isVisited ? 'visited' : ''}`}
               style={{
                 width: 52, height: 52,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: isHighlight ? 'rgba(124,58,237,0.3)' : isVisited ? 'rgba(16,185,129,0.15)' : 'var(--bg-3)',
-                border: `2px solid ${isHighlight ? 'var(--primary)' : isVisited ? 'var(--green)' : 'var(--border-2)'}`,
                 borderRadius: 10,
                 fontFamily: 'var(--mono)',
-                fontWeight: 600,
                 fontSize: '1rem',
-                color: isHighlight ? 'var(--primary-light)' : isVisited ? 'var(--green)' : 'var(--text)',
-                boxShadow: isHighlight ? '0 0 20px var(--primary-glow)' : 'none',
-                transition: 'all 0.3s ease',
               }}
             >
               {val}

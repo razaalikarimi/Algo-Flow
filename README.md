@@ -73,9 +73,10 @@ src/
 │   ├── Navbar.tsx          # top nav
 │   ├── LandingPage.tsx     # home/hero section
 │   ├── EditorPage.tsx      # main editor layout (sidebar + editor + vis)
-│   ├── MonacoEditor.tsx    # monaco wrapper with custom dark theme
+│   ├── MonacoEditor.tsx    # monaco wrapper with custom light theme
 │   ├── BarsVis.tsx         # bar chart vis for sorting
-│   ├── ArrayVis.tsx        # array element vis (binary search etc)
+│   ├── ArrayVis.tsx        # array element vis (search, stack, etc)
+│   ├── GraphVis.tsx        # SVG node-link vis for BFS/DFS
 │   └── ExamplesModal.tsx   # modal to browse/load examples
 ├── data/
 │   └── algorithms.ts       # all algorithm definitions + code snippets
@@ -98,10 +99,9 @@ Then the player just steps through those frames. Simple approach but it works we
 ## Known issues / TODO
 
 - Monaco loads from CDN so first load is slow if your internet is bad
-- Graph algorithms (BFS/DFS) currently show array view, need a proper graph canvas
-- Mobile layout is rough, designed primarily for desktop
-- No backend — everything runs in the browser, so Python code is displayed but not actually executed
-- Want to eventually add actual code execution via a sandboxed API
+- Mobile layout is a bit rough, optimized for desktop
+- Python code is displayed for study but doesn't execute in real-time (yet)
+- Working on adding Linked List, BST, and Dijkstra visualization soon
 
 ---
 

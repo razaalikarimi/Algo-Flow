@@ -1,37 +1,41 @@
-import React from 'react';
-import { Layout, Play, BookOpen, Settings, Github, Menu } from 'lucide-react';
+import React, { useState } from 'react';
+import { Zap, Menu, X, BookOpen, FileText, MessageSquare, LogIn } from 'lucide-react';
 
-interface NavbarProps {
-  onNavigate: (algo: string | null) => void;
+interface Props {
+  page: 'home' | 'editor';
+  onNavigate: (p: 'home' | 'editor') => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
+const Navbar: React.FC<Props> = ({ page, onNavigate }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <nav className="navbar glass">
-      <div className="nav-container">
-        <div className="nav-logo" onClick={() => onNavigate(null)}>
-          <div className="logo-icon">
-            <Layout size={24} color="#6366f1" />
-          </div>
-          <span className="logo-text">Algo<span className="gradient-text">Flow</span></span>
+    <nav className="navbar">
+      <div className="nav-inner">
+        <button className="nav-logo" onClick={() => onNavigate('home')} style={{ background: 'none', border: 'none' }}>
+          <div className="nav-logo-icon">⚡</div>
+          <span>AlgoFlow</span>
+          <span className="nav-badge">BETA</span>
+        </button>
+
+        <div className="nav-tabs">
+          <button className={`nav-tab ${page === 'editor' ? 'active' : ''}`} onClick={() => onNavigate('editor')}>
+            Editor
+          </button>
+          <button className="nav-tab">Documentation</button>
+          <button className="nav-tab">Articles</button>
+          <button className="nav-tab">Feedback</button>
         </div>
 
-        <div className="nav-links">
-          <button onClick={() => onNavigate('sorting')}>Algorithms</button>
-          <button onClick={() => onNavigate('data-structures')}>Data Structures</button>
-          <button>Complexity</button>
-          <button>Quiz</button>
-        </div>
-
-        <div className="nav-actions">
-          <button className="icon-btn"><Github size={20} /></button>
-          <button className="icon-btn"><Settings size={20} /></button>
-          <button className="glow-button">Sign In</button>
-          <button className="mobile-menu"><Menu size={24} /></button>
+        <div className="nav-right">
+          <button className="btn-ghost" style={{ fontSize: '0.82rem', padding: '6px 14px' }}>
+            <LogIn size={14} /> Login
+          </button>
+          <button className="btn-primary" onClick={() => onNavigate('editor')} style={{ fontSize: '0.82rem', padding: '6px 14px' }}>
+            Open Editor
+          </button>
         </div>
       </div>
-
-
     </nav>
   );
 };

@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import AlgorithmVisualizer from './components/AlgorithmVisualizer';
-import Footer from './components/Footer';
+import LandingPage from './components/LandingPage';
+import EditorPage from './components/EditorPage';
 import './index.css';
 
 const App: React.FC = () => {
-  const [selectedAlgo, setSelectedAlgo] = useState<string | null>(null);
+  const [page, setPage] = useState<'home' | 'editor'>('home');
 
   return (
-    <div className="app-container">
-      <Navbar onNavigate={(algo) => setSelectedAlgo(algo)} />
-      
-      {!selectedAlgo ? (
-        <Hero onStart={() => setSelectedAlgo('sorting')} />
+    <div style={{ minHeight: '100vh' }}>
+      <Navbar page={page} onNavigate={setPage} />
+      {page === 'home' ? (
+        <LandingPage onStart={() => setPage('editor')} />
       ) : (
-        <main className="main-content">
-          <AlgorithmVisualizer type={selectedAlgo} />
-        </main>
+        <EditorPage />
       )}
-      
-      <Footer />
     </div>
   );
 };

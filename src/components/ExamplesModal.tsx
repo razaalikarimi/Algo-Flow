@@ -54,7 +54,13 @@ const ExamplesModal: React.FC<Props> = ({ onSelect, onClose }) => {
             style={{ minWidth: 140, height: 44 }}
           >
             <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
             <option value="python">Python</option>
+            <option value="python3">Python3</option>
+            <option value="cpp">C++</option>
+            <option value="java">Java</option>
+            <option value="csharp">C#</option>
+            <option value="c">C</option>
           </select>
         </div>
 

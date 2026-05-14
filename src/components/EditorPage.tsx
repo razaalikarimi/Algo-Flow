@@ -9,7 +9,7 @@ import { ALGORITHMS } from '../data/algorithms';
 import { generateFrames } from '../engine/visualizer';
 import type { VisFrame } from '../engine/visualizer';
 
-type Lang = 'javascript' | 'python';
+type Lang = 'javascript' | 'python' | 'python3' | 'cpp' | 'java' | 'typescript' | 'csharp' | 'c';
 
 interface AlgoExample {
   id: string; name: string; category: string; difficulty: string;
@@ -183,19 +183,20 @@ const EditorPage: React.FC = () => {
 
           <div style={{ flex: 1 }} />
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--bg-3)', padding: '4px', borderRadius: 10 }}>
-            {(['javascript', 'python'] as const).map(l => (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--bg-3)', padding: '4px', borderRadius: 10, overflowX: 'auto', maxWidth: '300px', scrollbarWidth: 'none' }}>
+            {(['javascript', 'typescript', 'python', 'python3', 'cpp', 'java', 'csharp', 'c'] as const).map(l => (
               <button 
                 key={l}
                 onClick={() => handleLangChange(l)}
                 style={{
-                  fontSize: '0.75rem', fontWeight: 700, padding: '4px 10px', borderRadius: 8,
+                  fontSize: '0.7rem', fontWeight: 700, padding: '4px 8px', borderRadius: 8,
                   background: lang === l ? 'white' : 'transparent',
                   color: lang === l ? 'var(--primary)' : 'var(--text-3)',
-                  boxShadow: lang === l ? 'var(--shadow-sm)' : 'none'
+                  boxShadow: lang === l ? 'var(--shadow-sm)' : 'none',
+                  whiteSpace: 'nowrap'
                 }}
               >
-                {l === 'javascript' ? 'JS' : 'PY'}
+                {l.toUpperCase()}
               </button>
             ))}
           </div>
@@ -208,7 +209,7 @@ const EditorPage: React.FC = () => {
         <div className="code-area">
           <MonacoEditor
             code={code}
-            language={lang === 'javascript' ? 'javascript' : 'python'}
+            language={lang === 'python3' ? 'python' : lang}
             onChange={setCode}
             activeLines={frame ? [frame.activeLine] : []}
           />
